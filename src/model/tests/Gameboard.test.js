@@ -38,13 +38,97 @@ it("trys to place two overlapping ships, one horizontally at [4,5], one vertical
 });
 
 it("receiveAttack checks if a ship was hit, returns true at [4,5]", ()=>{
-    gameboard.placeShip([4,5],3);
+    gameboard.placeShip([4,5],3,0);
 
     expect(gameboard.receiveAttack([4,5])).toBe(true);
 });
 
 it("receiveAttack checks if a ship was hit, returns false at [0,0]", ()=>{
-    gameboard.placeShip([4,5],3);
+    gameboard.placeShip([4,5],3,0);
 
     expect(gameboard.receiveAttack([0,0])).toBe(false);
+});
+
+it("creates length-3 ship at [4,5], hits it once and the gameboard reports that not all ships are sunk", () =>{
+    gameboard.placeShip([4,5], 3, 0);
+    gameboard.receiveAttack([4,4]);
+
+    expect(gameboard.allSunk()).toBe(false);
+});
+
+it("creates length-3 ship at [4,5], hits it twice and the gameboard reports that not all ships are sunk", () =>{
+    gameboard.placeShip([4,5], 3, 0);
+    gameboard.receiveAttack([4,4]);
+    gameboard.receiveAttack([4,5]);
+
+    expect(gameboard.allSunk()).toBe(false);
+});
+
+it("creates length-3 ship at [4,5], sinks it and the gameboard reports that all ships are sunk", () =>{
+    gameboard.placeShip([4,5], 3, 0);
+    gameboard.receiveAttack([4,4]);
+    gameboard.receiveAttack([4,5]);
+    gameboard.receiveAttack([4,6]);
+
+    expect(gameboard.allSunk()).toBe(true);
+});
+
+it("creates 2 length-3 ship at [4,5] and [0,0], sinks one and the gameboard reports that not all ships are sunk", () =>{
+    gameboard.placeShip([0,0], 3, 1);
+    
+    gameboard.placeShip([4,5], 3, 0);
+    gameboard.receiveAttack([4,4]);
+    gameboard.receiveAttack([4,5]);
+    gameboard.receiveAttack([4,6]);
+
+    expect(gameboard.allSunk()).toBe(false);
+});
+
+it("creates 2 length-3 ship at [4,5] and [0,0], sinks both and the gameboard reports that  all ships are sunk", () =>{
+    gameboard.placeShip([0,0], 3, 1);
+    gameboard.placeShip([4,5], 3, 0);
+    gameboard.receiveAttack([4,4]);
+    gameboard.receiveAttack([4,5]);
+    gameboard.receiveAttack([4,6]);
+
+    gameboard.receiveAttack([0,0]);
+    gameboard.receiveAttack([1,0]);
+    gameboard.receiveAttack([2,0]);
+
+    expect(gameboard.allSunk()).toBe(true);
+});
+
+it("place a ship at [4,5], hits it, hits returns [4,5], misses return []", () => {
+    gameboard.placeShip([4,5], 3, 0);
+    gameboard.receiveAttack([4,5]);
+
+    expect(gameboard.getHits()).toEqual([[4,5]]);
+    expect(gameboard.getMisses()).toEqual([]);
+});
+
+it("place a ship at [4,5], misses it, hits returns [], misses return [0,0]", () => {
+    gameboard.placeShip([4,5], 3, 0);
+    gameboard.receiveAttack([0,0]);
+
+    expect(gameboard.getHits()).toEqual([]);
+    expect(gameboard.getMisses()).toEqual([[0,0]]);
+});
+
+it("place a ship at [4,5], hits it twice, misses it once, hits returns [[4,5], [4,6]], misses return [0,0]", () => {
+    gameboard.placeShip([4,5], 3, 0);
+    gameboard.receiveAttack([0,0]);
+    gameboard.receiveAttack([4,5]);
+    gameboard.receiveAttack([4,6]);
+
+    expect(gameboard.getHits()).toEqual([[4,5], [4,6]]);
+    expect(gameboard.getMisses()).toEqual([[0,0]]);
+});
+
+it("places ship at [4,5], hits [4,5] twice, getHits returns [4,5]", () => {
+    gameboard.placeShip([4,5], 3, 0);
+    gameboard.receiveAttack([4,5]);
+    
+    expect(gameboard.receiveAttack([4,5])).toBe(false);
+    expect(gameboard.getHits()).toEqual([[4,5]]);
+
 });

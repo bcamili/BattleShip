@@ -2,6 +2,10 @@ import { Ship } from "./Ship.js"
 
 export const Gameboard = () => {
     const board = [];
+    const ships = [];
+    const hits = [];
+    const misses = [];
+
     for(let i = 0; i<10; i++){
         board.push([]);
     }
@@ -76,54 +80,104 @@ export const Gameboard = () => {
         if(shipCoords.length > 0){
             let blocked = false;
 
-            newShipCoords.forEach(coord => {
-                if(!blocked){
-                    shipCoords.forEach(ship => {
-                        if(!blocked){
-                            ship.forEach(compCoord => {
-                                if(!blocked){
-                                    if(coord[0] === compCoord[0] && coord[1] === compCoord[1]){
-                                        blocked = true;
-                                    }
-                                }
-                            })
+            for(let i = 0; i<newShipCoords.length; i++){
+                let newShipCoord = newShipCoords[i];
+                for(let j = 0; j<shipCoords.length; j++){
+                    let ship = shipCoords[j];
+                    for(let k = 0; k<ship.length; k++){
+                        let shipCoord = ship[k];
+                        if(shipCoord[0] === newShipCoord[0] && shipCoord[1] === newShipCoord[1]){
+                            blocked = true;
+                            break;
                         }
-                    });
+                    }
+                    if(blocked) break;
                 }
-            });
+                if(blocked) break;
+            }
 
             if(blocked){
                 return false;
             }else{
-                shipCoords.push(newShipCoords);
-                newShipCoords.forEach(coord => {
-                    board[coord[0]][coord[1]] = newShip;
-                });
+                pushShip(newShip, newShipCoords);
             }
 
         }else{
-            shipCoords.push(newShipCoords);
-            newShipCoords.forEach(coord => {
-                board[coord[0]][coord[1]] = newShip;
-            });
+            pushShip(newShip, newShipCoords);
         }
+    }
+
+    const pushShip = (newShip, newShipCoords) => {
+        shipCoords.push(newShipCoords);
+        newShipCoords.forEach(coord => {
+            board[coord[0]][coord[1]] = newShip;
+        });
+        ships.push(newShip);
     }
 
     const getShipCoords = () => shipCoords;
 
     const receiveAttack = (coords) => {
-        const hitShip = board[coords[0]][[coords[1]]];
-        if(hitShip !== undefined){
-            hitShip.hit();
+        let shotAlready = false;
+        for(let i = 0; i<hits.length; i++){
+            let hitCoords = hits[i];
+            if(hitCoords[0]===coords[0] && hitCoords[1]===coords[1]){
+                shotAlready = true;
+            }
+        }
+
+        for(let i = 0; i<misses.length; i++){
+            let missedCoords = misses[i];
+            if(missedCoords[0]===coords[0] && missedCoords[1]===coords[1]){
+                shotAlready = true;
+            }
+        }
+
+        if(!shotAlready){
+            const hitShip = board[coords[0]][[coords[1]]];
+            if(hitShip !== undefined){
+                hitShip.hit();
+                hits.push(coords);
+                return true;
+            }else{
+                misses.push(coords);
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    const allSunk = () =>{
+        let allShipsSunk = true;
+
+        ships.forEach(ship => {
+            if(!ship.isSunk()){
+                allShipsSunk = false;
+            }
+        });
+
+        if(allShipsSunk){
             return true;
         }else{
             return false;
         }
     }
 
+    const getHits = () => {
+        return hits;
+    }
+
+    const getMisses = () => {
+        return misses;
+    }
+
     return {
         placeShip,
         getShipCoords,
-        receiveAttack
+        receiveAttack,
+        allSunk,
+        getHits,
+        getMisses
     }
 }
