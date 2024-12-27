@@ -172,12 +172,17 @@ export const Gameboard = () => {
         return misses;
     }
 
+    const getShips = () =>{
+        return ships;
+    }
+
     return {
         placeShip,
         getShipCoords,
         receiveAttack,
         allSunk,
         getHits,
-        getMisses
+        getMisses,
+        getShips
     }
 }
