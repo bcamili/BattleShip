@@ -141,7 +141,7 @@ export const Gameboard = () => {
                 return true;
             }else{
                 misses.push(coords);
-                return false;
+                return true;
             }
         }else{
             return false;
@@ -151,11 +151,14 @@ export const Gameboard = () => {
     const allSunk = () =>{
         let allShipsSunk = true;
 
-        ships.forEach(ship => {
+        for(let i = 0; i<ships.length; i++){
+            let ship = ships[i];
             if(!ship.isSunk()){
                 allShipsSunk = false;
+                break;
             }
-        });
+        }
+        
 
         if(allShipsSunk){
             return true;

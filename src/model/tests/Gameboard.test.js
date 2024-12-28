@@ -46,10 +46,10 @@ describe("Gameboard", () =>{
         expect(gameboard.receiveAttack([4,5])).toBe(true);
     });
     
-    it("receiveAttack checks if a ship was hit, returns false at [0,0]", ()=>{
+    it("receiveAttack checks if a ship was hit, returns true at [0,0]", ()=>{
         gameboard.placeShip([4,5],3,0);
         
-        expect(gameboard.receiveAttack([0,0])).toBe(false);
+        expect(gameboard.receiveAttack([0,0])).toBe(true);
     });
     
     it("creates length-3 ship at [4,5], hits it once and the gameboard reports that not all ships are sunk", () =>{

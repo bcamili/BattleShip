@@ -2,6 +2,7 @@ import { Player } from "./Player.js";
 
 export const game = (() => {
     const players = [Player("Player 1"), Player("Player 2")];
+    let attackedPlayer = 1;
 
     /* Board Layout:
          0   1   2   3   4   5   6   7   8   9
@@ -19,7 +20,7 @@ export const game = (() => {
 
     players.forEach(player => {
         player.gameboard.placeShip([3,0], 3, 1);
-        player.gameboard.placeShip([8,0], 2, 1);
+        player.gameboard.placeShip([9,0], 2, 1);
         player.gameboard.placeShip([6,3], 1, 0);
         player.gameboard.placeShip([8,4], 4, 0);
         player.gameboard.placeShip([0,5], 3, 0);
@@ -28,7 +29,38 @@ export const game = (() => {
         player.gameboard.placeShip([8,9], 1, 1);
     });
 
-    
+    const turn = (coords) =>{
+        let valid = players[attackedPlayer].gameboard.receiveAttack(coords);
+        if (valid){
+            attackedPlayer = attackedPlayer == 0 ? 1 : 0;
+            return valid;
+        }
+        else{
+            return valid;
+        }
+    }
+    const showCurrentlyAttackedBoard = () =>{
+        const player = players[attackedPlayer];
+        const board = [player.gameboard.getHits(), player.gameboard.getMisses()];
+        return board;
+    }
 
-    return {players};
+    const showUnattackedBoard = () =>{
+        const unattacked = attackedPlayer === 0 ? 1 : 0;
+        const player = players[unattacked];
+        const board = [player.gameboard.getHits(), player.gameboard.getMisses()];
+        return board;
+    }
+
+    const gameOver = () => {
+        return players[0].gameboard.allSunk() || players[1].gameboard.allSunk();
+    }
+
+    return {
+        players, 
+        turn, 
+        showCurrentlyAttackedBoard, 
+        showUnattackedBoard, 
+        gameOver
+    };
 })();

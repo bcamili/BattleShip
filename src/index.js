@@ -1,3 +1,3 @@
-import "./styles.css";
+import { controller } from "./controller/controller";
 
-document.getElementById("app").textContent = "works";
+
