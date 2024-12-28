@@ -1,0 +1,30 @@
+.boardDiv{
+    display: grid;
+    grid-template-columns: repeat(10, 30px);
+    grid-template-rows: repeat(10, 30px);
+}
+
+.cell{
+    background-color: lightblue;
+    border: 1px solid black;
+}
+
+.emptyCell{
+
+}
+
+.hitCell::after{
+    content: "💥";
+    font-size: 2rem;
+    position: relative;
+    top: -5px;
+    left: -3px;
+}
+
+.missedCell::after{
+    content: "❌";
+    font-size: 1.5rem;
+    position: relative;
+    top: 0px;
+    left: 1px;
+}
