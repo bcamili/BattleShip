@@ -50,7 +50,7 @@ export const controller = (()=>{
     game.turn([9,0]);
     */
     
-    view.renderBoard(game.showCurrentlyAttackedBoard(), handlerFunctions.cellHandlers);
+    view.renderGameBoard(game.showPlayer1Board(), null, game.showPlayer2Board(), handlerFunctions.cellHandlers);
 
 
     
