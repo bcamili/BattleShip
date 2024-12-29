@@ -15,9 +15,11 @@ export const handlerFunctions = (()=>{
     const cellHandlers = (() => {
         const emptyCellHandler = (coords) => {
             game.turn(coords);
-            view.renderBoard(game.showUnattackedBoard(), null);
-            //sleep(1000);
-            //view.renderBoard(game.showCurrentlyAttackedBoard(), cellHandlers)
+            if(game.getAttackedPlayer() === 0){
+                view.renderGameBoard(game.showPlayer1Board(),cellHandlers, game.showPlayer2Board(), null);
+            }else{
+                view.renderGameBoard(game.showPlayer1Board(),null, game.showPlayer2Board(), cellHandlers);
+            }
             
         }
 

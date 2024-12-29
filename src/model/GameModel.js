@@ -56,11 +56,29 @@ export const game = (() => {
         return players[0].gameboard.allSunk() || players[1].gameboard.allSunk();
     }
 
+    const showPlayer1Board = () =>{
+        const player = players[0];
+        const board = [player.gameboard.getHits(), player.gameboard.getMisses()];
+        return board;
+    }
+
+    const showPlayer2Board = () =>{
+        const player = players[1];
+        const board = [player.gameboard.getHits(), player.gameboard.getMisses()];
+        return board;
+    }
+
+    const getAttackedPlayer = () => attackedPlayer;
+    
+
     return {
         players, 
         turn, 
         showCurrentlyAttackedBoard, 
         showUnattackedBoard, 
+        showPlayer1Board,
+        showPlayer2Board,
+        getAttackedPlayer,
         gameOver
     };
 })();
