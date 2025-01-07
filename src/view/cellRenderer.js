@@ -29,12 +29,15 @@ export const cellRenderer = (() => {
         return cellDiv;
     }
 
-    const renderShipCell = (ship, shipCellHandler) => {
+    let lastClientX = null;
+    let lastClientY = null;
+
+    const renderShipCell = (ship, shipCellHandler, boardRect) => {
         const cellDiv = document.createElement("div");
         cellDiv.className = "cell";
         cellDiv.draggable = true;
         cellDiv.classList.add("shipCell");
-        cellDiv.addEventListener("click", () =>{
+        cellDiv.addEventListener("dblclick", () =>{
             shipCellHandler.shipRotationHandler(ship);
         });
 
@@ -47,18 +50,24 @@ export const cellRenderer = (() => {
         });
 
         cellDiv.addEventListener("drag", (e)=>{
-            
-            const direction = {
-                x: Math.floor(e.offsetX/30),
-                y: Math.floor(e.offsetY/30)
-            }
+                const target = [Math.floor((e.clientY - boardRect.top)/30), Math.floor((e.clientX - boardRect.left)/30)];
+                shipCellHandler.shipMovementHandler(ship, target);
 
-            shipCellHandler.shipMovementHandler(ship, direction);
-            
+        });
+
+        cellDiv.addEventListener("dragend", (e) =>{
+            shipCellHandler.shipTranslateHandler(ship);
         });
 
 
 
+        return cellDiv;
+    }
+
+    const renderGhostCell = () => {
+        const cellDiv = document.createElement("div");
+        cellDiv.className = "cell";
+        cellDiv.classList.add("shipCell");
         return cellDiv;
     }
 
@@ -69,7 +78,6 @@ export const cellRenderer = (() => {
 
         cellDiv.addEventListener("dragleave", (e) => {
             e.preventDefault();
-            console.log(coords);
             cellDiv.classList.remove("dragover");
             let selected = [...document.getElementsByClassName("x" + coords[0] + "y" +coords[1])];
             selected.forEach(item => {
@@ -102,6 +110,7 @@ export const cellRenderer = (() => {
         renderMissedCell,
         renderEmptyCell,
         renderShipCell,
+        renderGhostCell,
         renderSetUpCell
     }
     

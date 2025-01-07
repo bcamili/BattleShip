@@ -21,26 +21,51 @@ export const handlerFunctions = (()=>{
 
         const shipCellHandler = (() =>{
 
-            const shipMovementHandler = (ship, direction) => {
-                console.log(direction);
+            let justNow = new Date().getTime();
+
+            const shipMovementHandler = (ship, target) => {
+                let shipCoords = ship.getCoords();
+                let start = shipCoords[Math.floor(shipCoords.length/2)];
+                let direction = [target[0]-start[0], target[1]-start[1]];
+                let ghostShipCoords = [];
+                
+                for(let i = 0; i < shipCoords.length; i++){
+                    ghostShipCoords.push([shipCoords[i][0] + direction[0], shipCoords[i][1] + direction[1]]);
+                }
+
+
+                game.players[0].gameboard.setGhostShip(ghostShipCoords);
+                let now = new Date().getTime();
+                if(now-justNow>100){
+                    view.renderSetUpBoard(game.showPlayerBoard(0), shipCellHandler); 
+                    justNow = now;
+                }
             }
             
-            const shipRotationHandler = (ship) => {
-                /* const shipCoords = ship.getCoords();
-                const newShipCoords = [];
-                
-                for(let i = 0; i<shipCoords.length; i++){
-                    const coord = [shipCoords[i][0], shipCoords[i][1] + 1];
-                newShipCoords.push(coord);
-                }
-                
-                ship.setCoords(newShipCoords);
-                */
-               ship.rotate();
-               view.renderSetUpBoard(game.showPlayer1Board()[2], shipCellHandler); 
+            const shipRotationHandler = (ship) => {  
+               ship.rotate(game.players[0].gameboard.getShips());
+               game.players[0].gameboard.updateBoard();
+               view.renderSetUpBoard(game.showPlayerBoard(0), shipCellHandler); 
                
             }
-            return {shipRotationHandler, shipMovementHandler};
+
+            const shipTranslateHandler = (ship) =>{
+                const ghostShipCoords = game.players[0].gameboard.getGhostShip();
+                if(ghostShipCoords.length > 0){
+                    
+                    ship.setCoords(ghostShipCoords);
+                    game.players[0].gameboard.updateBoard();
+                    game.players[0].gameboard.setGhostShip([]);
+                    view.renderSetUpBoard(game.showPlayerBoard(0), shipCellHandler); 
+                }else{
+                    view.renderSetUpBoard(game.showPlayerBoard(0), shipCellHandler); 
+                }
+
+
+            }
+
+
+            return {shipRotationHandler, shipMovementHandler, shipTranslateHandler};
         })();
 
         return {emptyCellHandler, setupCellHandler, shipCellHandler}
@@ -48,8 +73,9 @@ export const handlerFunctions = (()=>{
 
     const startHandler =() =>{
         const lengths = [5, 4, 3, 3, 2, 2, 1, 1];
+        //const lengths = [ 3, 2, 1];
         game.setShipsRandomly(lengths);
-        view.initializeSetUpPlayer1(game.showPlayer1Board()[2], cellHandlers.shipCellHandler);
+        view.initializeSetUpPlayer1(game.showPlayerBoard(0), cellHandlers.shipCellHandler);
         //startGameHandler();
     }
     

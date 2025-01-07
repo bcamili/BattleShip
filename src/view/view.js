@@ -114,8 +114,6 @@ export const view = (()=>{
         gameView.appendChild(player1Side);
         gameView.appendChild(largeBoardsView);
 
-        
-
         renderSetUpBoard(player1Ships, shipCellHandler);
 
     }
@@ -140,9 +138,10 @@ export const view = (()=>{
         largeBoardsContainer.classList.toggle("player1Focus");
     }
 
-    const renderSetUpBoard = (ships, shipCellHandler) => {
+    const renderSetUpBoard = (board, shipCellHandler) => {
         player1LargeBoard.innerHTML ="";
-        player1LargeBoard.appendChild(boardRenderer.renderSetUpBoard(ships, shipCellHandler));
+        const boardRect = player1LargeBoard.getBoundingClientRect();
+        player1LargeBoard.appendChild(boardRenderer.renderSetUpBoard(board, shipCellHandler, boardRect));
 
     }
 

@@ -56,15 +56,9 @@ export const game = (() => {
         return players[0].gameboard.allSunk() || players[1].gameboard.allSunk();
     }
 
-    const showPlayer1Board = () =>{
-        const player = players[0];
-        const board = [player.gameboard.getHits(), player.gameboard.getMisses(), player.gameboard.getShips()];
-        return board;
-    }
-
-    const showPlayer2Board = () =>{
-        const player = players[1];
-        const board = [player.gameboard.getHits(), player.gameboard.getMisses(), player.gameboard.getShipCoords()];
+    const showPlayerBoard = (playerNum) =>{
+        const player = players[playerNum];
+        const board = [player.gameboard.getHits(), player.gameboard.getMisses(), player.gameboard.getShips(), player.gameboard.getGhostShip()];
         return board;
     }
 
@@ -89,8 +83,7 @@ export const game = (() => {
         turn, 
         showCurrentlyAttackedBoard, 
         showUnattackedBoard, 
-        showPlayer1Board,
-        showPlayer2Board,
+        showPlayerBoard,
         getAttackedPlayer,
         setShipsRandomly,
         gameOver
