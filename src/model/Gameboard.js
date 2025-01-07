@@ -99,11 +99,15 @@ export const Gameboard = () => {
             if(blocked){
                 return false;
             }else{
+                newShip.setCoords(newShipCoords);
                 pushShip(newShip, newShipCoords);
+                return true;
             }
 
         }else{
+            newShip.setCoords(newShipCoords);
             pushShip(newShip, newShipCoords);
+            return true;
         }
     }
 

@@ -31,7 +31,6 @@ export const view = (()=>{
     const player1Side = document.createElement("div");
     player1Side.id = "player1Side";
     player1Side.className = "playerSide";
-    gameView.appendChild(player1Side);
 
     const player1AvatarContainer = document.createElement("div");
     player1AvatarContainer.className = "avatarContainer";
@@ -56,12 +55,10 @@ export const view = (()=>{
     const player1LargeBoard = document.createElement("div");
     player1LargeBoard.id = "player1LargeBoard";
     player1LargeBoard.className = "largeBoard";
-    gameView.appendChild(player1LargeBoard);
 
     const player2LargeBoard = document.createElement("div");
     player2LargeBoard.id = "player2LargeBoard";
     player2LargeBoard.className = "largeBoard";
-    gameView.appendChild(player2LargeBoard);
 
     const largeBoardsContainer = document.createElement("div");
     largeBoardsContainer.id = "largeBoardsContainer";
@@ -72,12 +69,13 @@ export const view = (()=>{
     const largeBoardsView = document.createElement("div");
     largeBoardsView.id = "largeBoardsView";
     largeBoardsView.appendChild(largeBoardsContainer);
-    gameView.appendChild(largeBoardsView);
+
+    const player1Pieces = document.createElement("div");
+    player1Pieces.id = "player1Pieces";
 
     const player2Side = document.createElement("div");
     player2Side.id = "player2Side";
     player2Side.className = "playerSide";
-    gameView.appendChild(player2Side);
 
     const player2AvatarContainer = document.createElement("div");
     player2AvatarContainer.className = "avatarContainer";
@@ -94,11 +92,41 @@ export const view = (()=>{
     player2Stats.textContent = "Player 2"
     player2Side.appendChild(player2Stats);
 
-
     const player2SmallBoard = document.createElement("div");
     player2SmallBoard.id = "player2SmallBoard";
     player2SmallBoard.className = "smallBoard";
     player2Side.appendChild(player2SmallBoard);
+
+    const initializeAppView = (startHandler) => {
+        gameView.innerHTML = "";
+        const startButton = document.createElement("div");
+        startButton.id = "startButton";
+        startButton.textContent = "Start";
+        gameView.appendChild(startButton);
+
+        startButton.addEventListener("click", ()=>{
+            startHandler();
+        });
+    }
+
+    const initializeSetUpPlayer1 = (player1Ships, shipCellHandler) => {
+        gameView.innerHTML = "";
+        gameView.appendChild(player1Side);
+        gameView.appendChild(largeBoardsView);
+
+        
+
+        renderSetUpBoard(player1Ships, shipCellHandler);
+
+    }
+
+    const initializeGameView = (player1Board, player1CellHandlers, player2Board, player2CellHandlers) => {
+        gameView.innerHTML = "";
+        gameView.appendChild(player1Side);
+        gameView.appendChild(largeBoardsView);
+        gameView.appendChild(player2Side);
+        renderGameBoard(player1Board, player1CellHandlers, player2Board, player2CellHandlers);
+    }
 
     const renderGameBoard = (player1Board, player1CellHandlers, player2Board, player2CellHandlers) => {
         player1LargeBoard.innerHTML ="";
@@ -112,5 +140,16 @@ export const view = (()=>{
         largeBoardsContainer.classList.toggle("player1Focus");
     }
 
-    return {renderGameBoard}
+    const renderSetUpBoard = (ships, shipCellHandler) => {
+        player1LargeBoard.innerHTML ="";
+        player1LargeBoard.appendChild(boardRenderer.renderSetUpBoard(ships, shipCellHandler));
+
+    }
+
+    return {
+        initializeAppView,
+        initializeSetUpPlayer1,
+        initializeGameView,
+        renderSetUpBoard,
+        renderGameBoard}
 })();

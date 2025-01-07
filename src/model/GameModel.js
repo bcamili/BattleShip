@@ -16,9 +16,8 @@ export const game = (() => {
       7 [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]
       8 [S] [ ] [S] [S] [S] [S] [ ] [ ] [ ] [S]
       9 [S] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]
-    */
-
-    players.forEach(player => {
+      
+      players.forEach(player => {
         player.gameboard.placeShip([3,0], 3, 1);
         player.gameboard.placeShip([9,0], 2, 1);
         player.gameboard.placeShip([6,3], 1, 0);
@@ -28,6 +27,7 @@ export const game = (() => {
         player.gameboard.placeShip([3,8], 5, 1);
         player.gameboard.placeShip([8,9], 1, 1);
     });
+    */
 
     const turn = (coords) =>{
         let valid = players[attackedPlayer].gameboard.receiveAttack(coords);
@@ -58,17 +58,30 @@ export const game = (() => {
 
     const showPlayer1Board = () =>{
         const player = players[0];
-        const board = [player.gameboard.getHits(), player.gameboard.getMisses()];
+        const board = [player.gameboard.getHits(), player.gameboard.getMisses(), player.gameboard.getShips()];
         return board;
     }
 
     const showPlayer2Board = () =>{
         const player = players[1];
-        const board = [player.gameboard.getHits(), player.gameboard.getMisses()];
+        const board = [player.gameboard.getHits(), player.gameboard.getMisses(), player.gameboard.getShipCoords()];
         return board;
     }
 
     const getAttackedPlayer = () => attackedPlayer;
+
+    const setShipsRandomly = (shipLengths) =>{
+        for(let i = 0; i<shipLengths.length; i++){
+            players.forEach(player =>{
+                let coords = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]
+                let shipSet = player.gameboard.placeShip(coords, shipLengths[i], Math.round(Math.random()));
+                while(!shipSet){
+                    coords = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+                    shipSet = player.gameboard.placeShip(coords, shipLengths[i], Math.round(Math.random()));
+                }
+            });
+        }
+    }
     
 
     return {
@@ -79,6 +92,7 @@ export const game = (() => {
         showPlayer1Board,
         showPlayer2Board,
         getAttackedPlayer,
+        setShipsRandomly,
         gameOver
     };
 })();

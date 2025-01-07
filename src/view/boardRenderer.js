@@ -37,7 +37,62 @@ export const boardRenderer = (()=>{
          return boardDiv;
     }
 
+    const renderSetUpBoard = (ships, shipCellHandler) =>{
+        const boardDiv = document.createElement("div");
+        boardDiv.className = "boardDiv"; 
+        for(let i = 0; i<10; i++){
+            for(let j = 0; j<10; j++){
+                const cellWrapper = document.createElement("div");
+                cellWrapper.className = "cellWrapper";
+                cellWrapper.appendChild(cellRenderer.renderEmptyCell([i,j], null));
+                boardDiv.appendChild(cellWrapper);
+            }
+        }
+
+        for(let i = 0; i<ships.length; i++){
+            const ship = ships[i];
+            const shipCoords = ship.getCoords();
+            for(let j = 0; j<shipCoords.length; j++){
+                const shipPartCoords = shipCoords[j];
+                const index = shipPartCoords[0]*10 + shipPartCoords[1];
+                boardDiv.childNodes[index].innerHTML = "";
+                boardDiv.childNodes[index].appendChild(cellRenderer.renderShipCell(ship, shipCellHandler));
+            }
+        }
+
+        return boardDiv;
+    }
+
+    const clamp = (num, min, max) => {
+        return Math.max(min, Math.min(num, max));
+    }
+
+    const getValidMidpoint = (coords, shipLength, orientation)=>{
+        let midpoint = [];
+
+        if(orientation === 0){
+            midpoint.push(clamp(coords[0], 0, 9));
+            if(shipLength % 2  !== 0){
+                midpoint.push(clamp(coords[1], Math.floor(shipLength/2), 9 - Math.floor(shipLength/2)));
+            }else{
+                midpoint.push(clamp(coords[1], Math.floor(shipLength/2), 9 - (Math.floor(shipLength/2)-1)));
+            }
+        }else{
+            
+            if(shipLength % 2  !== 0){
+                midpoint.push(clamp(coords[0], Math.floor(shipLength/2), 9 - Math.floor(shipLength/2)));
+            }else{
+                midpoint.push(clamp(coords[0], Math.floor(shipLength/2), 9 - (Math.floor(shipLength/2)-1)));
+            }
+            midpoint.push(clamp(coords[1], 0, 9));
+        }
+
+        return midpoint;
+    }
+
+
     return{
-        renderBoard
+        renderBoard,
+        renderSetUpBoard
     }
 })();
