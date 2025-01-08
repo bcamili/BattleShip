@@ -1,15 +1,51 @@
 import { Ship } from "./Ship.js"
 
 export const Gameboard = () => {
-    const board = [];
+    let board = [];
     const ships = [];
     const hits = [];
     const misses = [];
+    let ghostShip = [];
 
     for(let i = 0; i<10; i++){
         board.push([]);
     }
     const shipCoords = [];
+
+    const updateBoard = () => {
+        board = [];
+        for(let i = 0; i<10; i++){
+            board.push([]);
+        }
+        for(let i = 0; i<ships.length; i++){
+            let ship = ships[i];
+            let shipCoords = ship.getCoords();
+            shipCoords.forEach(coord => {
+                board[coord[0]][coord[1]] = ship;
+            });
+        }
+    }
+
+    const setGhostShip = (coords) =>{
+        for(let i = 0; i<coords.length; i++){
+            let coord = coords[i];
+            if(coord[0]<0 || coord[0]>9 || coord[1]<0 || coord[1]>9){
+                return;
+            }
+        }
+
+        for(let i = 0; i<coords.length; i++){
+            let coord = coords[i];
+            if(board[coord[0]][coord[1]] !== undefined){
+                return;
+            }
+        }
+
+        ghostShip = coords;
+
+
+    }
+
 
     const clamp = (num, min, max) => {
         return Math.max(min, Math.min(num, max));
@@ -39,7 +75,7 @@ export const Gameboard = () => {
     }
 
     const placeShip = (coords, shipLength, orientation) => {
-        const newShip = Ship(shipLength);
+        const newShip = Ship(shipLength, orientation);
         const newShipCoords = [];
         let midpoint = getValidMidpoint(coords, shipLength, orientation);
         let halfLength = Math.floor(shipLength/2);
@@ -99,11 +135,15 @@ export const Gameboard = () => {
             if(blocked){
                 return false;
             }else{
+                newShip.setCoords(newShipCoords);
                 pushShip(newShip, newShipCoords);
+                return true;
             }
 
         }else{
+            newShip.setCoords(newShipCoords);
             pushShip(newShip, newShipCoords);
+            return true;
         }
     }
 
@@ -179,6 +219,10 @@ export const Gameboard = () => {
         return ships;
     }
 
+    const getGhostShip = () =>{
+        return ghostShip;
+    }
+
     return {
         placeShip,
         getShipCoords,
@@ -186,6 +230,9 @@ export const Gameboard = () => {
         allSunk,
         getHits,
         getMisses,
-        getShips
+        getShips,
+        setGhostShip,
+        getGhostShip,
+        updateBoard
     }
 }

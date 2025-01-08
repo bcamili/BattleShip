@@ -12,12 +12,11 @@ html{
     --darkPurple: #3d2b45;
     --flickerColor: var(--lightMidColor);
 
-    animation-duration: 10s;
-    animation-iteration-count: infinite;
-    animation-name: flicker;
-    height: 100vh;
+    animation : 
+        10s infinite flicker;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 @keyframes flicker{
@@ -32,9 +31,11 @@ html{
 }
 
 body{
+    min-width: 320px;
     margin: 0px;
     box-shadow: 0px 0px 100px -50px black inset;
     padding-top: 50px;
+    padding-bottom: 50px;
     flex-grow: 1;
     background-image: url("../img/Leather031_1K-JPG_Roughness.jpg"), linear-gradient(var(--darkBrown), var(--darkestColor));
     background-blend-mode: overlay;
@@ -42,6 +43,71 @@ body{
 
 #app{
     height: 100%;
+}
+
+#startButton{
+    font-family: "Quintessential";
+    font-size: 2rem;
+    color: var(--darkestColor);
+    padding: 8px 3% 12px 3%;
+    border-radius: 50px;
+    background: linear-gradient(var(--lightBrown),var(--darkBrown)) border-box;
+   
+    mask-composite: exclude;
+    cursor: pointer;
+    text-shadow: 0px 0px 1px var(--darkestColor);
+    filter: blur(.3px);
+    box-shadow:
+        -1px -1px 3px 1px black,
+        1px 1px 3px var(--lightBrown),
+        -3px -3px 12px 3px black inset,
+        3px 3px 12px var(--lightBrown) inset;
+    
+}
+
+#startButton:hover{
+    color: var(--lightMidColor);
+    text-shadow: 0px 0px 5px var(--lightMidColor);
+    filter: blur(.5px);
+    animation: 1s ease glowUp;
+}
+
+@keyframes glowUp{
+    0%{
+        color: var(--darkMidColor);
+        text-shadow: 0px 0px 0px var(--lightMidColor);
+        filter: blur(0px);
+    }
+
+    5%{
+        color: var(--darkMidColor);
+        text-shadow: 0px 0px 0px var(--lightMidColor);
+        filter: blur(.5px);
+    }
+
+    10%{
+        color: var(--lightColor);
+        text-shadow: 0px 0px 5px var(--lightColor);
+        filter: blur(.5px);
+    }
+
+    90%{
+        color: var(--lightMidColor);
+        text-shadow: 0px 0px 5px var(--lightMidColor);
+        filter: blur(.5px);
+    }
+}
+
+#startButton:active{
+    padding: 10px 3% 10px 3%;
+    color: var(--lightMidColor);
+    text-shadow: 0px 0px 5px var(--lightMidColor);
+    filter: blur(.5px);
+    box-shadow:
+        -1px -1px 3px 1px black,
+        1px 1px 3px var(--lightBrown),
+        3px 3px 12px 3px black inset,
+        -3px -3px 12px 3px black inset;
 }
 
 #titleDiv{
@@ -54,7 +120,11 @@ body{
 }
 
 #titleContainer{
-    box-shadow: 3px 3px 24px 3px black, -3px -3px 24px var(--lightBrown), -1px -1px 5px var(--flickerColor) inset, 1px 1px 5px var(--darkBrown) inset;
+    box-shadow: 
+        -1px -1px 3px 1px black,
+        1px 1px 3px var(--lightBrown), 
+        -1px -1px 5px var(--flickerColor) inset, 
+        1px 1px 5px var(--darkBrown) inset;
     padding: 0px 20px 0px 20px;
     border: 3px solid;
     border-image: linear-gradient(var(--darkColor), var(--lightColor), var(--darkestColor) 80%) 1;
@@ -68,6 +138,7 @@ body{
     background: linear-gradient(var(--darkColor), var(--lightColor), color-mix(in hsl, var(--flickerColor), var(--darkestColor)) 85%);
     background-clip: text;
     color: transparent;
+
 }
 
 
@@ -83,7 +154,64 @@ body{
     
 }
 
+#player1Pieces{
+    background-color: var(--lightColor);
+    width: 150px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
 
+.dragging{
+    box-shadow: 0px 0px 0px 3px var(--lightPurple) inset;
+}
+
+
+
+.l5Ship{
+    margin: 5px;
+    width: 120px;
+    height: 24px;
+    background-color: var(--darkMidColor);
+    cursor: move;
+}
+
+.l4Ship{
+    margin: 5px;
+    width: 96px;
+    height: 24px;
+    background-color: var(--darkMidColor);
+    cursor: move;
+}
+
+.l3Ship{
+    margin: 5px;
+    width: 72px;
+    height: 24px;
+    background-color: var(--darkMidColor);
+    cursor: move;
+
+}
+
+.l2Ship{
+    margin: 5px;
+    width: 48px;
+    height: 24px;
+    background-color: var(--darkMidColor);
+    cursor: move;
+
+}
+
+.l1Ship{
+    margin: 5px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--darkMidColor);   
+    cursor: move;
+
+}
 
 #gameView{
     display: flex;
@@ -98,7 +226,11 @@ body{
     background-color: white;
     border-image: linear-gradient(135deg, var(--darkBrown) 30%, black 100%) 1;
     overflow: hidden;
-    box-shadow: 3px 3px 12px 3px black, -2px -4px 12px var(--middleBrown), 0px 0px 10px 10px var(--darkBrown) inset, 0px 0px 60px 0px var(--darkBrown) inset;
+    box-shadow: 
+        -1px -1px 3px 1px black,
+        1px 1px 3px var(--lightBrown), 
+        0px 0px 10px 10px var(--darkBrown) inset, 
+        0px 0px 60px 0px var(--darkBrown) inset;
 }
 
 .avatar{
@@ -166,14 +298,195 @@ body{
     height: 100%;
 }
 
+.cellWrapper{
+    width: 100%;
+    height: 100%;
+}
+
 .cell{
     background-color: var(--lightColor);
-    border: 1px solid var(--darkColor);
+    height: 100%;
+    box-shadow: inset 0px 0px 0px 1px var(--darkMidColor);
+    width: 100%;
 }
 
 .cell:hover{
     box-shadow: 0px 0px 0px 3px var(--lightPurple) inset;
 }
+
+.cell.dragover{
+    box-shadow: 0px 0px 0px 3px var(--lightPurple) inset;
+}
+
+.cell.selected{
+    background-color: var(--darkColor);
+}
+
+
+
+
+
+.cell.shipCell{
+    background-color: var(--darkBrown);
+    cursor: grab;
+    box-shadow: 
+        inset 0px 6px 0px -3px var(--darkMidColor),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -6px 0px -3px var(--darkMidColor),
+        inset 0px -12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell:active{
+    cursor: grabbing;
+}
+
+.cell.shipCell:hover{
+    box-shadow:  
+        inset 0px 6px 0px -3px var(--lightPurple), 
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -6px 0px -3px var(--lightPurple),
+        inset 0px -12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.shipTail{
+    box-shadow: 
+        inset -6px 0px 0px -3px var(--darkMidColor),
+        inset 0px 6px 0px -3px var(--darkMidColor), 
+        inset 0px -6px 0px -3px var(--darkMidColor),
+        inset -12px 0px 0px -3px var(--darkColor),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -12px 0px -3px var(--darkColor)
+        ;
+}
+
+.cell.shipCell.shipTail:hover{
+    box-shadow: 
+        inset 0px 6px 0px -3px var(--lightPurple), 
+        inset 0px -6px 0px -3px var(--lightPurple), 
+        inset -6px 0px 0px -3px var(--lightPurple),
+        inset -12px 0px 0px -3px var(--darkColor),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -12px 0px -3px var(--darkColor)
+        ;
+}
+
+.cell.shipCell.shipHead{
+    box-shadow: 
+        inset 0px 6px 0px -3px var(--darkMidColor), 
+        inset 0px -6px 0px -3px var(--darkMidColor), 
+        inset 6px 0px 0px -3px var(--darkMidColor),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -12px 0px -3px var(--darkColor),
+        inset 12px 0px 0px -3px var(--darkColor)
+        ;
+}
+
+.cell.shipCell.shipHead:hover{
+    box-shadow: 
+        inset 0px 6px 0px -3px var(--lightPurple), 
+        inset 0px -6px 0px -3px var(--lightPurple), 
+        inset 6px 0px 0px -3px var(--lightPurple),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -12px 0px -3px var(--darkColor),
+        inset 12px 0px 0px -3px var(--darkColor)
+        ;
+}
+
+
+.cell.shipCell.shipTail.shipHead{
+    box-shadow: 
+        inset 0px 0px 0px 3px var(--darkMidColor),
+        inset 0px 0px 0px 9px var(--darkColor)
+    ;
+}
+
+.cell.shipCell.shipTail.shipHead:hover{
+    box-shadow: 
+        inset 0px 0px 0px 3px var(--lightPurple),
+        inset 0px 0px 0px 9px var(--darkColor)
+        ;
+}
+
+
+.cell.shipCell.vertical{
+    cursor: grab;
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--darkMidColor), 
+        inset -6px 0px 0px -3px var(--darkMidColor),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor);
+}
+.cell.shipCell.vertical:active{
+    cursor: grabbing;
+}
+
+.cell.shipCell.vertical:hover{
+    box-shadow:  
+        inset 6px 0px 0px -3px var(--lightPurple), 
+        inset -6px 0px 0px -3px var(--lightPurple),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipTail{
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--darkMidColor), 
+        inset -6px 0px 0px -3px var(--darkMidColor), 
+        inset 0px -6px 0px -3px var(--darkMidColor),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor), 
+        inset 0px -12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipTail:hover{
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--lightPurple), 
+        inset -6px 0px 0px -3px var(--lightPurple), 
+        inset 0px -6px 0px -3px var(--lightPurple),        
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor), 
+        inset 0px -12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipHead{
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--darkMidColor), 
+        inset -6px 0px 0px -3px var(--darkMidColor), 
+        inset 0px 6px 0px -3px var(--darkMidColor),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor), 
+        inset 0px 12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipHead:hover{
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--lightPurple), 
+        inset -6px 0px 0px -3px var(--lightPurple), 
+        inset 0px 6px 0px -3px var(--lightPurple),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor), 
+        inset 0px 12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipTail.shipHead{
+    box-shadow: 
+    inset 0px 0px 0px 3px var(--darkMidColor),
+    inset 0px 0px 0px 9px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipTail.shipHead:hover{
+    box-shadow: 
+        inset 0px 0px 0px 3px var(--lightPurple),
+        inset 0px 0px 0px 9px var(--darkColor);
+}
+
+
+.cell.ghostCell{
+    background-color: var(--darkMidColor);
+    
+}
+
+
 
 .hitCell::after{
     content: "💥";
