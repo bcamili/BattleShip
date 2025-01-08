@@ -29,14 +29,18 @@ export const cellRenderer = (() => {
         return cellDiv;
     }
 
-    let lastClientX = null;
-    let lastClientY = null;
+    let justNow = new Date().getTime();
+    let interval = 0;
 
     const renderShipCell = (ship, shipCellHandler, boardRect) => {
         const cellDiv = document.createElement("div");
         cellDiv.className = "cell";
         cellDiv.draggable = true;
         cellDiv.classList.add("shipCell");
+        if(ship.getOrientation() === 1){
+            cellDiv.classList.add("vertical");
+        }
+
         cellDiv.addEventListener("dblclick", () =>{
             shipCellHandler.shipRotationHandler(ship);
         });
@@ -50,9 +54,17 @@ export const cellRenderer = (() => {
         });
 
         cellDiv.addEventListener("drag", (e)=>{
-                const target = [Math.floor((e.clientY - boardRect.top)/30), Math.floor((e.clientX - boardRect.left)/30)];
-                shipCellHandler.shipMovementHandler(ship, target);
-
+            if(interval === 200){
+                let now = new Date().getTime();
+                if(now-justNow>200){
+                    const target = [Math.floor((e.clientY - boardRect.top)/30), Math.floor((e.clientX - boardRect.left)/30)];
+                    shipCellHandler.shipMovementHandler(ship, target);
+                    justNow = now;
+                }
+                interval = 0;
+            }else{
+                interval++;
+            }
         });
 
         cellDiv.addEventListener("dragend", (e) =>{
@@ -67,7 +79,7 @@ export const cellRenderer = (() => {
     const renderGhostCell = () => {
         const cellDiv = document.createElement("div");
         cellDiv.className = "cell";
-        cellDiv.classList.add("shipCell");
+        cellDiv.classList.add("ghostCell");
         return cellDiv;
     }
 

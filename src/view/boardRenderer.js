@@ -60,7 +60,16 @@ export const boardRenderer = (()=>{
                 const shipPartCoords = shipCoords[j];
                 const index = shipPartCoords[0]*10 + shipPartCoords[1];
                 boardDiv.childNodes[index].innerHTML = "";
-                boardDiv.childNodes[index].appendChild(cellRenderer.renderShipCell(ship, shipCellHandler, boardRect));
+                const shipCell = cellRenderer.renderShipCell(ship, shipCellHandler, boardRect);
+                if(j===0){
+                    shipCell.classList.add("shipHead");
+                }
+
+                if(j===shipCoords.length-1){
+                    shipCell.classList.add("shipTail");
+                }
+                
+                boardDiv.childNodes[index].appendChild(shipCell);
             }
         }
 

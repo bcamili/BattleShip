@@ -1,6 +1,8 @@
-export const Ship = (length) => {
+export const Ship = (length, orientation) => {
     let numHits = 0;
     let coords = [];
+    
+    const getOrientation = () => orientation;
 
     const hit = () => {
         numHits++;
@@ -41,6 +43,7 @@ export const Ship = (length) => {
 
         if (!checkCollision(newCoords, otherShips.concat([{ getCoords: () => tempCoords }]))) {
             setCoords(newCoords);
+            orientation = orientation === 0 ? 1 : 0;
         }   
     }
 
@@ -52,7 +55,6 @@ export const Ship = (length) => {
                 if(shipCoords === coords){
                     continue;
                 }else{
-                    console.log(shipCoords);
                     for (let k = 0; k < shipCoords.length; k++) {
                         if (newCoords[i][0] === shipCoords[k][0] && newCoords[i][1] === shipCoords[k][1]) {
                             return true;
@@ -64,5 +66,5 @@ export const Ship = (length) => {
         return false;
     };
 
-    return { hit, setCoords, getCoords, isSunk, rotate };
+    return { getOrientation, hit, setCoords, getCoords, isSunk, rotate };
 }

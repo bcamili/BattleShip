@@ -75,7 +75,7 @@ export const Gameboard = () => {
     }
 
     const placeShip = (coords, shipLength, orientation) => {
-        const newShip = Ship(shipLength);
+        const newShip = Ship(shipLength, orientation);
         const newShipCoords = [];
         let midpoint = getValidMidpoint(coords, shipLength, orientation);
         let halfLength = Math.floor(shipLength/2);

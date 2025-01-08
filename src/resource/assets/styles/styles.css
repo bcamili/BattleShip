@@ -305,8 +305,9 @@ body{
 
 .cell{
     background-color: var(--lightColor);
-    border: 1px solid var(--darkColor);
     height: 100%;
+    box-shadow: inset 0px 0px 0px 1px var(--darkMidColor);
+    width: 100%;
 }
 
 .cell:hover{
@@ -321,9 +322,171 @@ body{
     background-color: var(--darkColor);
 }
 
+
+
+
+
 .cell.shipCell{
-    background-color: var(--darkColor);
+    background-color: var(--darkBrown);
+    cursor: grab;
+    box-shadow: 
+        inset 0px 6px 0px -3px var(--darkMidColor),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -6px 0px -3px var(--darkMidColor),
+        inset 0px -12px 0px -3px var(--darkColor);
 }
+
+.cell.shipCell:active{
+    cursor: grabbing;
+}
+
+.cell.shipCell:hover{
+    box-shadow:  
+        inset 0px 6px 0px -3px var(--lightPurple), 
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -6px 0px -3px var(--lightPurple),
+        inset 0px -12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.shipTail{
+    box-shadow: 
+        inset -6px 0px 0px -3px var(--darkMidColor),
+        inset 0px 6px 0px -3px var(--darkMidColor), 
+        inset 0px -6px 0px -3px var(--darkMidColor),
+        inset -12px 0px 0px -3px var(--darkColor),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -12px 0px -3px var(--darkColor)
+        ;
+}
+
+.cell.shipCell.shipTail:hover{
+    box-shadow: 
+        inset 0px 6px 0px -3px var(--lightPurple), 
+        inset 0px -6px 0px -3px var(--lightPurple), 
+        inset -6px 0px 0px -3px var(--lightPurple),
+        inset -12px 0px 0px -3px var(--darkColor),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -12px 0px -3px var(--darkColor)
+        ;
+}
+
+.cell.shipCell.shipHead{
+    box-shadow: 
+        inset 0px 6px 0px -3px var(--darkMidColor), 
+        inset 0px -6px 0px -3px var(--darkMidColor), 
+        inset 6px 0px 0px -3px var(--darkMidColor),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -12px 0px -3px var(--darkColor),
+        inset 12px 0px 0px -3px var(--darkColor)
+        ;
+}
+
+.cell.shipCell.shipHead:hover{
+    box-shadow: 
+        inset 0px 6px 0px -3px var(--lightPurple), 
+        inset 0px -6px 0px -3px var(--lightPurple), 
+        inset 6px 0px 0px -3px var(--lightPurple),
+        inset 0px 12px 0px -3px var(--darkColor),
+        inset 0px -12px 0px -3px var(--darkColor),
+        inset 12px 0px 0px -3px var(--darkColor)
+        ;
+}
+
+
+.cell.shipCell.shipTail.shipHead{
+    box-shadow: 
+        inset 0px 0px 0px 3px var(--darkMidColor),
+        inset 0px 0px 0px 9px var(--darkColor)
+    ;
+}
+
+.cell.shipCell.shipTail.shipHead:hover{
+    box-shadow: 
+        inset 0px 0px 0px 3px var(--lightPurple),
+        inset 0px 0px 0px 9px var(--darkColor)
+        ;
+}
+
+
+.cell.shipCell.vertical{
+    cursor: grab;
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--darkMidColor), 
+        inset -6px 0px 0px -3px var(--darkMidColor),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor);
+}
+.cell.shipCell.vertical:active{
+    cursor: grabbing;
+}
+
+.cell.shipCell.vertical:hover{
+    box-shadow:  
+        inset 6px 0px 0px -3px var(--lightPurple), 
+        inset -6px 0px 0px -3px var(--lightPurple),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipTail{
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--darkMidColor), 
+        inset -6px 0px 0px -3px var(--darkMidColor), 
+        inset 0px -6px 0px -3px var(--darkMidColor),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor), 
+        inset 0px -12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipTail:hover{
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--lightPurple), 
+        inset -6px 0px 0px -3px var(--lightPurple), 
+        inset 0px -6px 0px -3px var(--lightPurple),        
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor), 
+        inset 0px -12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipHead{
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--darkMidColor), 
+        inset -6px 0px 0px -3px var(--darkMidColor), 
+        inset 0px 6px 0px -3px var(--darkMidColor),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor), 
+        inset 0px 12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipHead:hover{
+    box-shadow: 
+        inset 6px 0px 0px -3px var(--lightPurple), 
+        inset -6px 0px 0px -3px var(--lightPurple), 
+        inset 0px 6px 0px -3px var(--lightPurple),
+        inset 12px 0px 0px -3px var(--darkColor), 
+        inset -12px 0px 0px -3px var(--darkColor), 
+        inset 0px 12px 0px -3px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipTail.shipHead{
+    box-shadow: 
+    inset 0px 0px 0px 3px var(--darkMidColor),
+    inset 0px 0px 0px 9px var(--darkColor);
+}
+
+.cell.shipCell.vertical.shipTail.shipHead:hover{
+    box-shadow: 
+        inset 0px 0px 0px 3px var(--lightPurple),
+        inset 0px 0px 0px 9px var(--darkColor);
+}
+
+
+.cell.ghostCell{
+    background-color: var(--darkMidColor);
+    
+}
+
+
 
 .hitCell::after{
     content: "💥";
