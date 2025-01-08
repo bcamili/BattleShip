@@ -37,9 +37,10 @@ export const boardRenderer = (()=>{
          return boardDiv;
     }
 
-    const renderSetUpBoard = (board, shipCellHandler, boardRect) =>{
+    const renderSetUpBoard = (board, shipCellHandler, boardRect, playerNum) =>{
         const boardDiv = document.createElement("div");
         boardDiv.className = "boardDiv"; 
+        console.log(boardRect);
 
         let ships = board[2];
         let ghostShip = board[3];
@@ -52,7 +53,7 @@ export const boardRenderer = (()=>{
                 boardDiv.appendChild(cellWrapper);
             }
         }
-
+        
         for(let i = 0; i<ships.length; i++){
             const ship = ships[i];
             const shipCoords = ship.getCoords();
@@ -60,7 +61,7 @@ export const boardRenderer = (()=>{
                 const shipPartCoords = shipCoords[j];
                 const index = shipPartCoords[0]*10 + shipPartCoords[1];
                 boardDiv.childNodes[index].innerHTML = "";
-                const shipCell = cellRenderer.renderShipCell(ship, shipCellHandler, boardRect);
+                const shipCell = cellRenderer.renderShipCell(ship, shipCellHandler, boardRect, playerNum);
                 if(j===0){
                     shipCell.classList.add("shipHead");
                 }

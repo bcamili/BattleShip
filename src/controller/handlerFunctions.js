@@ -8,57 +8,57 @@ export const handlerFunctions = (()=>{
         const emptyCellHandler = (coords) => {
             game.turn(coords);
             if(game.getAttackedPlayer() === 0){
-                view.renderGameBoard(game.showPlayer1Board(),cellHandlers, game.showPlayer2Board(), null);
+                view.renderGameBoard(game.showPlayerBoard(0),cellHandlers, game.showPlayerBoard(1), null);
             }else{
-                view.renderGameBoard(game.showPlayer1Board(),null, game.showPlayer2Board(), cellHandlers);
+                view.renderGameBoard(game.showPlayerBoard(0),null, game.showPlayerBoard(1), cellHandlers);
             }
             
-        }
-
-        const setupCellHandler = (coords) => {
-
         }
 
         const shipCellHandler = (() =>{
 
             let justNow = new Date().getTime();
 
-            const shipMovementHandler = (ship, target) => {
+            const shipMovementHandler = (ship, target, playerNum) => {
                 let shipCoords = ship.getCoords();
                 let start = shipCoords[Math.floor(shipCoords.length/2)];
                 let direction = [target[0]-start[0], target[1]-start[1]];
                 let ghostShipCoords = [];
                 
+
                 for(let i = 0; i < shipCoords.length; i++){
                     ghostShipCoords.push([shipCoords[i][0] + direction[0], shipCoords[i][1] + direction[1]]);
                 }
+                console.log(ghostShipCoords);
 
+                game.players[playerNum].gameboard.setGhostShip(ghostShipCoords);
+                console.log(game.players[playerNum].gameboard.getGhostShip());
 
-                game.players[0].gameboard.setGhostShip(ghostShipCoords);
                 let now = new Date().getTime();
                 if(now-justNow>100){
-                    view.renderSetUpBoard(game.showPlayerBoard(0), shipCellHandler); 
+                    
+                    view.renderSetUpBoard(game.showPlayerBoard(playerNum), shipCellHandler, playerNum); 
                     justNow = now;
                 }
             }
             
-            const shipRotationHandler = (ship) => {  
-               ship.rotate(game.players[0].gameboard.getShips());
-               game.players[0].gameboard.updateBoard();
-               view.renderSetUpBoard(game.showPlayerBoard(0), shipCellHandler); 
+            const shipRotationHandler = (ship, playerNum) => {  
+               ship.rotate(game.players[playerNum].gameboard.getShips());
+               game.players[playerNum].gameboard.updateBoard();
+               view.renderSetUpBoard(game.showPlayerBoard(playerNum), shipCellHandler, playerNum); 
                
             }
 
-            const shipTranslateHandler = (ship) =>{
-                const ghostShipCoords = game.players[0].gameboard.getGhostShip();
+            const shipTranslateHandler = (ship, playerNum) =>{
+                const ghostShipCoords = game.players[playerNum].gameboard.getGhostShip();
                 if(ghostShipCoords.length > 0){
                     
                     ship.setCoords(ghostShipCoords);
-                    game.players[0].gameboard.updateBoard();
-                    game.players[0].gameboard.setGhostShip([]);
-                    view.renderSetUpBoard(game.showPlayerBoard(0), shipCellHandler); 
+                    game.players[playerNum].gameboard.updateBoard();
+                    game.players[playerNum].gameboard.setGhostShip([]);
+                    view.renderSetUpBoard(game.showPlayerBoard(playerNum), shipCellHandler, playerNum); 
                 }else{
-                    view.renderSetUpBoard(game.showPlayerBoard(0), shipCellHandler); 
+                    view.renderSetUpBoard(game.showPlayerBoard(playerNum), shipCellHandler, playerNum); 
                 }
 
 
@@ -68,19 +68,30 @@ export const handlerFunctions = (()=>{
             return {shipRotationHandler, shipMovementHandler, shipTranslateHandler};
         })();
 
-        return {emptyCellHandler, setupCellHandler, shipCellHandler}
+        return {emptyCellHandler, shipCellHandler}
     })();
 
-    const startHandler =() =>{
+    const startHandler =(() =>{
         const lengths = [5, 4, 3, 3, 2, 2, 1, 1];
-        //const lengths = [ 3, 2, 1];
         game.setShipsRandomly(lengths);
-        view.initializeSetUpPlayer1(game.showPlayerBoard(0), cellHandlers.shipCellHandler);
-        //startGameHandler();
+
+        const onePlayerMode = () =>{
+            view.initializeSetUpPlayer1(game.showPlayerBoard(0), cellHandlers.shipCellHandler, startGameHandler);
+        }
+
+        const twoPlayerMode = () =>{
+            view.initializeSetUpPlayer1(game.showPlayerBoard(0), cellHandlers.shipCellHandler, player2SetupHandler);
+        }
+
+        return {onePlayerMode, twoPlayerMode};
+    })()
+
+    const player2SetupHandler = () =>{
+        view.initializeSetUpPlayer2(game.showPlayerBoard(1), cellHandlers.shipCellHandler, startGameHandler);
     }
-    
+
     const startGameHandler = () =>{
-        view.initializeGameView(game.showPlayer1Board(), null, game.showPlayer2Board(), handlerFunctions.cellHandlers);
+        view.initializeGameView(game.showPlayerBoard(0), null, game.showPlayerBoard(1), handlerFunctions.cellHandlers);
     }
     
     return {

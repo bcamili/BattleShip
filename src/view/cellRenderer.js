@@ -32,7 +32,7 @@ export const cellRenderer = (() => {
     let justNow = new Date().getTime();
     let interval = 0;
 
-    const renderShipCell = (ship, shipCellHandler, boardRect) => {
+    const renderShipCell = (ship, shipCellHandler, boardRect, playerNum) => {
         const cellDiv = document.createElement("div");
         cellDiv.className = "cell";
         cellDiv.draggable = true;
@@ -41,8 +41,13 @@ export const cellRenderer = (() => {
             cellDiv.classList.add("vertical");
         }
 
+        cellDiv.addEventListener("dragstart", (e) => {
+            var img = new Image();
+            img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+            e.dataTransfer.setDragImage(img, 0, 0);        });
+
         cellDiv.addEventListener("dblclick", () =>{
-            shipCellHandler.shipRotationHandler(ship);
+            shipCellHandler.shipRotationHandler(ship, playerNum);
         });
 
         document.addEventListener("drop", (e)=>{
@@ -54,11 +59,12 @@ export const cellRenderer = (() => {
         });
 
         cellDiv.addEventListener("drag", (e)=>{
+            cellDiv.style.cursor = "grabbing";
             if(interval === 200){
                 let now = new Date().getTime();
                 if(now-justNow>200){
                     const target = [Math.floor((e.clientY - boardRect.top)/30), Math.floor((e.clientX - boardRect.left)/30)];
-                    shipCellHandler.shipMovementHandler(ship, target);
+                    shipCellHandler.shipMovementHandler(ship, target, playerNum);
                     justNow = now;
                 }
                 interval = 0;
@@ -68,7 +74,7 @@ export const cellRenderer = (() => {
         });
 
         cellDiv.addEventListener("dragend", (e) =>{
-            shipCellHandler.shipTranslateHandler(ship);
+            shipCellHandler.shipTranslateHandler(ship, playerNum);
         });
 
 
@@ -83,39 +89,7 @@ export const cellRenderer = (() => {
         return cellDiv;
     }
 
-    const renderSetUpCell = (coords, placeSelection) => {
-        const cellDiv = document.createElement("div");
-        cellDiv.className = "cell";
-        cellDiv.classList.add("setupCell");
-
-        cellDiv.addEventListener("dragleave", (e) => {
-            e.preventDefault();
-            cellDiv.classList.remove("dragover");
-            let selected = [...document.getElementsByClassName("x" + coords[0] + "y" +coords[1])];
-            selected.forEach(item => {
-                console.log("removed");
-                item.classList.remove("selected");
-            });
-        });
-
-        cellDiv.addEventListener("dragenter", (e) => {
-            e.preventDefault();
-            cellDiv.classList.add("dragover");
-            let shipDiv = document.getElementsByClassName("dragging")[0];
-            let shipLength = Number(shipDiv.classList[0].charAt(1));
-            
-            placeSelection(coords, shipLength);
-        });
-
-        cellDiv.addEventListener("dragover", (e) => {
-            e.preventDefault();    
-        });
-        cellDiv.addEventListener("drop", (e) => {
-            e.preventDefault();
-        });
-        
-        return cellDiv;
-    }
+    
 
     return {
         renderHitCell,
@@ -123,7 +97,6 @@ export const cellRenderer = (() => {
         renderEmptyCell,
         renderShipCell,
         renderGhostCell,
-        renderSetUpCell
     }
     
 })();

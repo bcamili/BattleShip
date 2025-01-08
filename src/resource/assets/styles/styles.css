@@ -45,14 +45,63 @@ body{
     height: 100%;
 }
 
-#startButton{
+/* TITLE */
+#titleDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+#titleContainer{
+    box-shadow: 
+        -1px -1px 3px 1px black,
+        1px 1px 3px var(--lightBrown), 
+        -1px -1px 5px var(--flickerColor) inset, 
+        1px 1px 5px var(--darkBrown) inset;
+    padding: 0px 20px 0px 20px;
+    border: 3px solid;
+    border-image: linear-gradient(var(--darkColor), var(--lightColor), var(--darkestColor) 80%) 1;
+    background: linear-gradient(var(--darkBrown), var(--middleBrown), var(--darkBrown));
+}
+#titleText{
+    font-family: "Quintessential";
+    font-size: 5rem;
+    background: linear-gradient(var(--darkColor), var(--lightColor), color-mix(in hsl, var(--flickerColor), var(--darkestColor)) 85%);
+    background-clip: text;
+    color: transparent;
+}
+
+/* Start Button */
+#subtitleText{
+    font-family: "Permanent Marker";
+    color: var(--flickerColor);
+    text-shadow: 0px 0px 1px var(--flickerColor), 0px 0px 50px var(--flickerColor),-3px 3px 0px var(--darkestColor);
+    font-size: 1.75rem;
+    position: relative;
+    top: -40px;
+    left: 165px;
+    margin-bottom: -40px;
+}
+#buttonContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.startButton{
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: "Quintessential";
     font-size: 2rem;
     color: var(--darkestColor);
     padding: 8px 3% 12px 3%;
     border-radius: 50px;
     background: linear-gradient(var(--lightBrown),var(--darkBrown)) border-box;
-   
     mask-composite: exclude;
     cursor: pointer;
     text-shadow: 0px 0px 1px var(--darkestColor);
@@ -62,16 +111,13 @@ body{
         1px 1px 3px var(--lightBrown),
         -3px -3px 12px 3px black inset,
         3px 3px 12px var(--lightBrown) inset;
-    
 }
-
-#startButton:hover{
+.startButton:hover{
     color: var(--lightMidColor);
     text-shadow: 0px 0px 5px var(--lightMidColor);
     filter: blur(.5px);
     animation: 1s ease glowUp;
 }
-
 @keyframes glowUp{
     0%{
         color: var(--darkMidColor);
@@ -97,8 +143,7 @@ body{
         filter: blur(.5px);
     }
 }
-
-#startButton:active{
+.startButton:active{
     padding: 10px 3% 10px 3%;
     color: var(--lightMidColor);
     text-shadow: 0px 0px 5px var(--lightMidColor);
@@ -110,115 +155,29 @@ body{
         -3px -3px 12px 3px black inset;
 }
 
-#titleDiv{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 50px;
-    
+.startButton.readyButton{
+    font-size: 1.2rem;
+    width: 80px;
+    justify-self: center;
+    margin-top: 50px;
 }
 
-#titleContainer{
-    box-shadow: 
-        -1px -1px 3px 1px black,
-        1px 1px 3px var(--lightBrown), 
-        -1px -1px 5px var(--flickerColor) inset, 
-        1px 1px 5px var(--darkBrown) inset;
-    padding: 0px 20px 0px 20px;
-    border: 3px solid;
-    border-image: linear-gradient(var(--darkColor), var(--lightColor), var(--darkestColor) 80%) 1;
-    background: linear-gradient(var(--darkBrown), var(--middleBrown), var(--darkBrown));
-}
-
-
-#titleText{
-    font-family: "Quintessential";
-    font-size: 5rem;
-    background: linear-gradient(var(--darkColor), var(--lightColor), color-mix(in hsl, var(--flickerColor), var(--darkestColor)) 85%);
-    background-clip: text;
-    color: transparent;
-
-}
-
-
-#subtitleText{
-    font-family: "Permanent Marker";
-    color: var(--flickerColor);
-    text-shadow: 0px 0px 1px var(--flickerColor), 0px 0px 50px var(--flickerColor),-3px 3px 0px var(--darkestColor);
-    font-size: 1.75rem;
-    position: relative;
-    top: -40px;
-    left: 165px;
-    margin-bottom: -40px;
-    
-}
-
-#player1Pieces{
-    background-color: var(--lightColor);
-    width: 150px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.dragging{
-    box-shadow: 0px 0px 0px 3px var(--lightPurple) inset;
-}
-
-
-
-.l5Ship{
-    margin: 5px;
-    width: 120px;
-    height: 24px;
-    background-color: var(--darkMidColor);
-    cursor: move;
-}
-
-.l4Ship{
-    margin: 5px;
-    width: 96px;
-    height: 24px;
-    background-color: var(--darkMidColor);
-    cursor: move;
-}
-
-.l3Ship{
-    margin: 5px;
-    width: 72px;
-    height: 24px;
-    background-color: var(--darkMidColor);
-    cursor: move;
-
-}
-
-.l2Ship{
-    margin: 5px;
-    width: 48px;
-    height: 24px;
-    background-color: var(--darkMidColor);
-    cursor: move;
-
-}
-
-.l1Ship{
-    margin: 5px;
-    width: 24px;
-    height: 24px;
-    background-color: var(--darkMidColor);   
-    cursor: move;
-
-}
-
+/* GAME VIEW */
 #gameView{
+    
+}
+
+#gameContainer{
     display: flex;
     justify-content: center;
     align-items: end;
     gap: 20px;
 }
+
+#setUpContainer{
+    display: flex;
+    justify-content: center;
+    gap: 20px;}
 
 .avatarContainer{
     width: 100px;
