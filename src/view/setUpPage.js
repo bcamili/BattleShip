@@ -89,7 +89,6 @@ export const setUpPage = (() => {
     const playerBoards = [player1LargeBoard, player2LargeBoard];
 
     const renderSetUpBoard = (board, shipCellHandler, playerNum, boardRect) => {
-        console.log(boardRect);
             const playerBoard = playerBoards[playerNum];
             playerBoard.innerHTML ="";
             if(boardRect===undefined){

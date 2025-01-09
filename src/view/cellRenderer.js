@@ -1,9 +1,23 @@
+import hitIcon from "../resource/assets/img/bomb-explosion-svgrepo-com.svg";
+import missedIcon from "../resource/assets/img/cross-svgrepo-com.svg";
+
 export const cellRenderer = (() => {
 
     const renderHitCell = () =>{
         const cellDiv = document.createElement("div");
         cellDiv.className = "cell";
         cellDiv.classList.add("hitCell");
+
+        const hitIconIMG = document.createElement("img");
+        hitIconIMG.className = "hitIconIMG";
+        hitIconIMG.src = hitIcon;
+
+        const hitIconDiv = document.createElement("div");
+        hitIconDiv.className = "hitIconDiv";
+        hitIconDiv.appendChild(hitIconIMG);
+
+        cellDiv.appendChild(hitIconDiv);
+
         return cellDiv;
     }
 
@@ -11,6 +25,16 @@ export const cellRenderer = (() => {
         const cellDiv = document.createElement("div");
         cellDiv.className = "cell";
         cellDiv.classList.add("missedCell");
+        
+        const missedIconIMG = document.createElement("img");
+        missedIconIMG.className = "missedIconIMG";
+        missedIconIMG.src = missedIcon;
+
+        const missedIconDiv = document.createElement("div");
+        missedIconDiv.className = "missedIconDiv";
+        missedIconDiv.appendChild(missedIconIMG);
+
+        cellDiv.appendChild(missedIconDiv);
 
         return cellDiv;
     }
@@ -59,6 +83,7 @@ export const cellRenderer = (() => {
         });
 
         cellDiv.addEventListener("drag", (e)=>{
+            e.preventDefault();
             cellDiv.style.cursor = "grabbing";
             if(interval === 200){
                 let now = new Date().getTime();

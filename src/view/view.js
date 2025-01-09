@@ -42,7 +42,6 @@ export const view = (()=>{
         gameView.appendChild(div);
         const boardRect = div.getBoundingClientRect();
         div.remove();
-        console.log(boardRect);
         gameView.appendChild(setUpPage.player1SetUp(player1Ships, shipCellHandler, readyButtonHandler, boardRect));
     }
 

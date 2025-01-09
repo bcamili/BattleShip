@@ -30,10 +30,6 @@ export const Gameboard = () => {
         for(let i = 0; i<coords.length; i++){
             let coord = coords[i];
             if(coord[0]<0 || coord[0]>9 || coord[1]<0 || coord[1]>9){
-                console.log(coord[0]<0);
-                console.log(coord[0]>9);
-                console.log(coord[1]<0);
-                console.log(coord[1]>9);
                 return;
             }
         }

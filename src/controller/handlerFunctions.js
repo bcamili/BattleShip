@@ -29,10 +29,8 @@ export const handlerFunctions = (()=>{
                 for(let i = 0; i < shipCoords.length; i++){
                     ghostShipCoords.push([shipCoords[i][0] + direction[0], shipCoords[i][1] + direction[1]]);
                 }
-                console.log(ghostShipCoords);
 
                 game.players[playerNum].gameboard.setGhostShip(ghostShipCoords);
-                console.log(game.players[playerNum].gameboard.getGhostShip());
 
                 let now = new Date().getTime();
                 if(now-justNow>100){
