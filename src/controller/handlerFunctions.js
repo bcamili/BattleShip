@@ -3,6 +3,8 @@ import { view } from "../view/view.js";
 
 export const handlerFunctions = (()=>{
 
+    let vsComp = false;
+
     const cellHandlers = (() => {
 
         const emptyCellHandler = (coords) => {
@@ -12,8 +14,30 @@ export const handlerFunctions = (()=>{
             }else{
                 view.renderGameBoard(game.showPlayerBoard(0),null, game.showPlayerBoard(1), cellHandlers);
             }
+
+            if(game.getAttackedPlayer() === 0 && vsComp){
+                compTurn();
+            }
             
         }
+
+        const compTurn = () =>{
+            let coords = [Math.floor(Math.random()*10), Math.floor(Math.random()*10)];
+            let valid = game.turn(coords);
+            while(!valid[0]){
+                coords = [Math.floor(Math.random()*10), Math.floor(Math.random()*10)];
+                valid = game.turn(coords);
+            }
+            if(valid[1]){
+                compTurn();
+            }
+            if(game.getAttackedPlayer() === 0){
+                view.renderGameBoard(game.showPlayerBoard(0),cellHandlers, game.showPlayerBoard(1), null);
+            }else{
+                view.renderGameBoard(game.showPlayerBoard(0),null, game.showPlayerBoard(1), cellHandlers);
+            }
+        }
+        
 
         const shipCellHandler = (() =>{
 
@@ -74,6 +98,7 @@ export const handlerFunctions = (()=>{
         game.setShipsRandomly(lengths);
 
         const onePlayerMode = () =>{
+            vsComp = true;
             view.initializeSetUpPlayer1(game.showPlayerBoard(0), cellHandlers.shipCellHandler, startGameHandler);
         }
 

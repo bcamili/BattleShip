@@ -88,7 +88,11 @@ export const gamePage = (() => {
         player2SmallBoard.innerHTML ="";
         player1SmallBoard.appendChild(boardRenderer.renderBoard(player2Board, null));
         player2SmallBoard.appendChild(boardRenderer.renderBoard(player1Board, null));
-        largeBoardsContainer.classList.toggle("player1Focus");
+        if(player1CellHandlers===null){
+            largeBoardsContainer.classList.remove("player1Focus");
+        }else{
+            largeBoardsContainer.classList.add("player1Focus");
+        }
     }
 
     return {

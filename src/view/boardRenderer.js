@@ -39,7 +39,6 @@ export const boardRenderer = (()=>{
             let ship = ships[i];
             if(ship.isSunk()){
                 let shipCoords = ship.getCoords();
-                console.log(ships);
                 for(let j = 0; j<shipCoords.length; j++){
                     const shipPartCoords = shipCoords[j];
                     const index = shipPartCoords[0]*10 + shipPartCoords[1];
