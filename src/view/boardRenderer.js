@@ -14,8 +14,6 @@ export const boardRenderer = (()=>{
 
         let nextMiss = misses.shift();
         
-        
-        
         for(let i = 0; i<10; i++){
             for(let j = 0; j<10; j++){
                 if(nextHit !== undefined && (i === nextHit[0] && j === nextHit[1])){
@@ -34,13 +32,42 @@ export const boardRenderer = (()=>{
                 }
             }
         }
-         return boardDiv;
+
+        const ships = board[2];
+
+        for(let i = 0; i<ships.length;i++){
+            let ship = ships[i];
+            if(ship.isSunk()){
+                let shipCoords = ship.getCoords();
+                console.log(ships);
+                for(let j = 0; j<shipCoords.length; j++){
+                    const shipPartCoords = shipCoords[j];
+                    const index = shipPartCoords[0]*10 + shipPartCoords[1];
+                    const shipCell = boardDiv.childNodes[index];
+                    shipCell.innerHTML = "";
+                    boardDiv.childNodes[index].className = "cell shipCell";
+
+                    if(ship.getOrientation() === 1){
+                        shipCell.classList.add("vertical");
+                    }
+
+                    if(j===0){
+                        shipCell.classList.add("shipHead");
+                    }
+    
+                    if(j===shipCoords.length-1){
+                        shipCell.classList.add("shipTail");
+                    }
+                }
+            }
+        }
+
+        return boardDiv;
     }
 
     const renderSetUpBoard = (board, shipCellHandler, boardRect, playerNum) =>{
         const boardDiv = document.createElement("div");
         boardDiv.className = "boardDiv"; 
-        console.log(boardRect);
 
         let ships = board[2];
         let ghostShip = board[3];
