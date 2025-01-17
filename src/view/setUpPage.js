@@ -54,6 +54,9 @@ export const setUpPage = (() => {
     
     const player1SetUp = (player1Ships, shipCellHandler, readyButtonHandler, boardRect) => {
         setUpContainer.innerHTML = "";
+        player1Side.innerHTML = "";
+        player1Side.appendChild(player1AvatarContainer);
+        player1Side.appendChild(player1Stats);
         setUpContainer.appendChild(player1Side);
         setUpContainer.appendChild(player1LargeBoard);
         const readyButton = document.createElement("div");
@@ -71,6 +74,9 @@ export const setUpPage = (() => {
 
     const player2SetUp = (player2Ships, shipCellHandler, readyHandler) => {
         setUpContainer.innerHTML = "";
+        player2Side.innerHTML = "";
+        player2Side.appendChild(player2AvatarContainer);
+        player2Side.appendChild(player2Stats);
         setUpContainer.appendChild(player2LargeBoard);
         setUpContainer.appendChild(player2Side);
         const readyButton = document.createElement("div");

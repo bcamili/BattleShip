@@ -1,11 +1,10 @@
 import { Player } from "./Player.js";
 
 export const game = (() => {
-    const players = [Player("Player 1"), Player("Player 2")];
+    let players = [Player("Player 1"), Player("Player 2")];
     let attackedPlayer = 1;
 
     const turn = (coords) =>{
-        console.log(attackedPlayer === 1 ? 0 : 1, coords);
         let valid = players[attackedPlayer].gameboard.receiveAttack(coords);
         if (valid[0]){
             if(!valid[1]){
@@ -33,7 +32,15 @@ export const game = (() => {
     }
 
     const gameOver = () => {
-        return players[0].gameboard.allSunk() || players[1].gameboard.allSunk();
+        if(players[0].gameboard.allSunk()){
+            return [players[1], players[0]];
+        }
+
+        if(players[1].gameboard.allSunk()){
+            return [players[0], players[1]];
+        }
+
+        return false;
     }
 
     const showPlayerBoard = (playerNum) =>{
@@ -56,6 +63,11 @@ export const game = (() => {
             });
         }
     }
+
+    const restart = () =>{
+        players = [Player("Player 1"), Player("Player 2")];
+        attackedPlayer = 1;
+    }
     
 
     return {
@@ -66,6 +78,7 @@ export const game = (() => {
         showPlayerBoard,
         getAttackedPlayer,
         setShipsRandomly,
-        gameOver
+        gameOver,
+        restart
     };
 })();
