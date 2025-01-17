@@ -16,7 +16,12 @@ html{
         10s infinite flicker;
     display: flex;
     flex-direction: column;
-    height: 100%;
+
+    background-image: url("../img/Leather031_1K-JPG_Roughness.jpg"), linear-gradient(var(--darkBrown), var(--darkestColor));
+    background-blend-mode: overlay;
+    height: 100vh;
+    box-shadow: 0px 0px 100px -50px black inset;    
+
 }
 
 @keyframes flicker{
@@ -33,16 +38,10 @@ html{
 body{
     min-width: 320px;
     margin: 0px;
-    box-shadow: 0px 0px 100px -50px black inset;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    flex-grow: 1;
-    background-image: url("../img/Leather031_1K-JPG_Roughness.jpg"), linear-gradient(var(--darkBrown), var(--darkestColor));
-    background-blend-mode: overlay;
 }
 
 #app{
-    height: 100%;
+ margin-top: 50px;
 }
 
 /* TITLE */
@@ -179,6 +178,41 @@ body{
     justify-content: center;
     gap: 20px;}
 
+.player1PicAndShipsContainer{
+    display: flex;
+}
+
+.shipContainer{
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-grow: 1;    
+}
+
+.previewShip{
+    display: flex;
+    gap: 2px;
+}
+
+.previewShipPart{
+    background-color: var(--lightMidColor);
+    width: 5px;
+    height: 5px;
+    border-radius: 50px;
+}
+
+.previewShipPart.sunkShip{
+    background-color: var(--darkMidColor);
+    opacity: 50%;
+}
+
+#player2Side .player1PicAndShipsContainer .shipContainer{
+    align-items: end;
+    padding-left: 0;
+    padding-right: 10px;
+}
+
 .avatarContainer{
     width: 100px;
     border: 2px solid transparent;
@@ -198,6 +232,8 @@ body{
     transform: translateY(2%);
     mix-blend-mode: multiply;
 }
+
+
 
 .playerStats img{
     mix-blend-mode: color;
@@ -236,7 +272,7 @@ body{
     display: flex;
     gap: 50px;
     position: relative;
-    transition: transform 4s ease-in-out;
+    transition: transform 2s ease-in-out;
     transform: translateX(-350px);
 }
 
@@ -528,3 +564,158 @@ body{
     opacity: 0;
 }
 
+
+#gameOverScreen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+#gameOverBG{
+    display: flex;
+    background-color: var(--lightBrown);
+    margin: 0 60px 60px 60px;
+    box-shadow: 
+    -1px -1px 3px 1px black,
+    1px 1px 3px var(--lightBrown), 
+    0px 0px 5px 1px var(--darkBrown) inset, 
+    0px 0px 30px 0px var(--darkBrown) inset;
+    width: 100%;
+}
+
+#winnerBox, #loserBox{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+#loserBox{
+    backdrop-filter: brightness(20%);
+}
+
+#winnerHeader, #loserHeader{
+    font-family: "Quintessential";
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--darkBrown);
+    padding: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loserHeader{
+    color: var(--lightBrown);
+}
+
+#winnerContent, #loserContent{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 40px;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#loserContent{
+    margin-bottom: 40px;
+}
+
+.winnerStatsContainer, .loserStatsContainer{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1rem;
+    margin: 20px 0 20px 0;
+}
+
+.winnerStatsContainer span, .loserStatsContainer span{
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.loserStatsContainer{
+    color: var(--lightBrown);
+}
+
+.loserStatsContainer span{
+    color: var(--lightPurple);
+    opacity: 50%;
+
+}
+
+.winnerStatsContainer{
+    color: var(--darkBrown);
+}
+
+.winnerStatsContainer span{
+    color: var(--darkPurple);
+}
+
+
+
+
+#winnerContent .avatarContainer, #loserContent .avatarContainer{
+    border: none;
+    background: none;
+    overflow: hidden;
+    box-shadow: none;
+    opacity: 90%;
+    box-shadow: 0 0 0 2px var(--darkBrown);
+}
+
+#winnerContent .avatarContainer{
+    width: 150px;
+    
+}
+
+#winnerContent .avatarContainer .avatar{
+    width: 100%;
+    scale: 120%;
+    transform: translateY(2%);
+    mix-blend-mode: normal;
+}
+
+#loserContent .avatarContainer{
+    width: 150px;
+    opacity: 70%;
+    filter: sepia(100%);
+}
+
+#loserContent .avatarContainer .avatar{
+    width: 100%;
+    scale: 120%;
+    transform: translateY(2%);
+    mix-blend-mode: normal;
+}
+
+.finalBoardContainer{
+    background-color: var(--darkestColor);
+    width: 150px;
+}
+
+.finalBoardDiv{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.finalCell{
+    width: 15px;
+    height: 15px;
+    box-shadow: 0 0 0 1px var(--darkBrown)inset;
+}
+
+.finalCell.hit{
+    background-color: var(--darkMidColor);
+}
+
+.finalCell.miss{
+    background-color: var(--darkColor);
+    opacity: 50%;
+}
+
+.finalCell.fail{
+    background-color: var(--lightMidColor);
+}

@@ -3,6 +3,7 @@ import "../resource/assets/styles/styles.css";
 import { startPage } from "./startPage";
 import { setUpPage } from "./setUpPage";
 import { gamePage } from "./gamePage";
+import { gameOverPage } from "./gameOverPage";
 
 export const view = (()=>{
 
@@ -60,7 +61,13 @@ export const view = (()=>{
     }
 
     const renderGameBoard = (player1Board, player1CellHandlers, player2Board, player2CellHandlers) => {
+        
         gamePage.renderGameBoard(player1Board, player1CellHandlers, player2Board, player2CellHandlers);
+    }
+
+    const gameOverScreen = (winnerStats, loserStats, restartHandler) =>{
+        gameView.innerHTML = "";
+        gameView.appendChild(gameOverPage.gameOver(winnerStats, loserStats, restartHandler));
     }
 
     return {
@@ -69,6 +76,7 @@ export const view = (()=>{
         initializeSetUpPlayer2,
         initializeGameView,
         renderGameBoard,
-        renderSetUpBoard
+        renderSetUpBoard,
+        gameOverScreen
     }
 })();

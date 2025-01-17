@@ -39,7 +39,6 @@ export const boardRenderer = (()=>{
             let ship = ships[i];
             if(ship.isSunk()){
                 let shipCoords = ship.getCoords();
-                console.log(ships);
                 for(let j = 0; j<shipCoords.length; j++){
                     const shipPartCoords = shipCoords[j];
                     const index = shipPartCoords[0]*10 + shipPartCoords[1];
@@ -139,9 +138,32 @@ export const boardRenderer = (()=>{
         return midpoint;
     }
 
+    const finalBoard = (board) =>{
+        let boardDiv = document.createElement("div");
+        boardDiv.className = "finalBoardDiv";
+
+        for(let i = 0; i< board.length; i++){
+            for(let j = 0; j < board[i].length; j++){
+                let newCell = document.createElement("div");
+                newCell.className = "finalCell";
+                if(board[i][j] === -1){
+                    newCell.classList.add("miss");
+                }else if(board[i][j] === 1){
+                    newCell.classList.add("fail");
+                }else if(board[i][j] === 2){
+                    newCell.classList.add("hit");
+                }else{
+                    newCell.classList.add("empty");
+                }
+                boardDiv.appendChild(newCell)
+            }
+        }
+        return boardDiv;
+    }
 
     return{
         renderBoard,
-        renderSetUpBoard
+        renderSetUpBoard,
+        finalBoard
     }
 })();

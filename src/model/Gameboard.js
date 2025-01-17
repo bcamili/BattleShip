@@ -178,10 +178,10 @@ export const Gameboard = () => {
             if(hitShip !== undefined){
                 hitShip.hit();
                 hits.push(coords);
-                return true;
+                return [true, true];
             }else{
                 misses.push(coords);
-                return true;
+                return [true, false];
             }
         }else{
             return false;
